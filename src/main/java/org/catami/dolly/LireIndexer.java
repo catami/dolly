@@ -65,7 +65,7 @@ public class LireIndexer {
             //if the index contains the image, don't index it
             String imageFilePath = it.next();
             if(!indexedFiles.contains(imageFilePath)) {
-                System.out.println("Indexing " + imageFilePath);
+               
                 try {
                     BufferedImage img = ImageIO.read(new FileInputStream(imageFilePath));
                     Document document = builder.createDocument(img, imageFilePath);
@@ -79,7 +79,6 @@ public class LireIndexer {
 
         // closing the IndexWriter
         iw.close();
-        System.out.println("Finished indexing.");
 
     }
 }
