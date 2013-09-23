@@ -22,8 +22,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * Created by mat on 30/07/13.
@@ -76,12 +75,13 @@ public class LireIndexer {
                     Document document = builder.createDocument(img, imageFilePath);
                     iw.addDocument(document);
                 } catch (Exception e) {
-                    logger.warning("Error reading image or indexing it.");
+                    logger.error("Error reading image or indexing it.");
                     e.printStackTrace();
                 }
             }
         }
 
+        logger.info("Finished indexing.");
         // closing the IndexWriter
         iw.close();
 
