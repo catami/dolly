@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by mat on 30/07/13.
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 public class LireSearcher {
+    private static Logger logger = Logger.getLogger("LireSearcher");
 
     public LireSearcher() {}
 
@@ -38,6 +40,8 @@ public class LireSearcher {
         } else { //default to CEDD
             searcher = ImageSearcherFactory.createCEDDImageSearcher(100000);
         }
+
+        logger.info("Searching on image: " + imagePath);
 
         //do the search
         ImageSearchHits hits = searcher.search(ImageIO.read(new File(imagePath)), ir);
@@ -58,6 +62,8 @@ public class LireSearcher {
                 if(imageList.size() >= limit) break;
             }
         }
+
+        logger.info("Found this many images: " + imageList.size());
 
         return imageList;
     }

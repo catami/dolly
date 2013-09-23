@@ -22,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by mat on 30/07/13.
@@ -29,6 +31,7 @@ import java.util.Iterator;
 
 @Service
 public class LireIndexer {
+    private static Logger logger = Logger.getLogger("LireIndexer");
 
     public LireIndexer() {}
 
@@ -65,13 +68,15 @@ public class LireIndexer {
             //if the index contains the image, don't index it
             String imageFilePath = it.next();
             if(!indexedFiles.contains(imageFilePath)) {
-               
+
+                logger.info("Indexing " + imageFilePath);
+
                 try {
                     BufferedImage img = ImageIO.read(new FileInputStream(imageFilePath));
                     Document document = builder.createDocument(img, imageFilePath);
                     iw.addDocument(document);
                 } catch (Exception e) {
-                    System.err.println("Error reading image or indexing it.");
+                    logger.warning("Error reading image or indexing it.");
                     e.printStackTrace();
                 }
             }
