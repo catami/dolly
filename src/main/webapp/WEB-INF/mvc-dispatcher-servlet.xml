@@ -2,22 +2,43 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:task="http://www.springframework.org/schema/task"
+
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        ">
 
     <context:component-scan base-package="org.catami.dolly"/>
 
+    <!--<task:annotation-driven/>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="harvester" class="org.catami.dolly.ScheduledDirectoryHarvester">
+        <constructor-arg name="directoryToWatch" value="/var/www/catami-media/importedimages"/>
+        <!--<constructor-arg name="directoryToWatch" value="/Users/mat/Dev/catami-data/importedimages"/>-->
+    </bean>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="harvester" method="harvestDirectory" fixed-rate="10000"/>
+    </task:scheduled-tasks>
+
+    <!--
     <bean class="org.catami.dolly.DirectoryHarvester">
         <constructor-arg name="directoryToWatch" value="/var/www/catami-media/importedimages"/>
         <constructor-arg name="frequencyOfHarvestInSeconds" value="30"/>
     </bean>
+    -->
 
     <mvc:annotation-driven />
 

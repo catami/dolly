@@ -1,5 +1,6 @@
 package org.catami.dolly;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import java.io.IOException;
 @RequestMapping("/search")
 public class SearchController {
 
+    private static Logger logger = Logger.getLogger("SearchController");
+
     @Autowired
     private LireSearcher lireSearcher;
 
@@ -27,8 +30,13 @@ public class SearchController {
                                           @RequestParam("similarityGreater") double similarityGreater,
                                           @RequestParam("featureType") String featureType) throws IOException {
 
-        //search for the similar images
-        return lireSearcher.search(imagePath, imageComparisonList, limit, similarityGreater, featureType);
+        try {
+            //search for the similar images
+            return lireSearcher.search(imagePath, imageComparisonList, limit, similarityGreater, featureType);
+        } catch (IOException e) {
+            logger.error(e);
+            throw e;
+        }
     }
 
 }

@@ -9,7 +9,7 @@
     <name>dolly</name>
 
     <properties>
-        <spring.version>3.2.0.RELEASE</spring.version>
+        <spring.version>3.2.4.RELEASE</spring.version>
     </properties>
 
     <repositories>
