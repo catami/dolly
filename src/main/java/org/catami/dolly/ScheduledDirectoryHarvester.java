@@ -22,18 +22,16 @@ public class ScheduledDirectoryHarvester {
     private String directoryToWatch = "/Users/mat/Dev/catami-data/importedimages";
 
     public ScheduledDirectoryHarvester() {
-        System.out.println("------------ loaded default");
+        logger.info("Loaded default constructor ScheduledDirectoryHarvester");
     }
 
     public ScheduledDirectoryHarvester(String directoryToWatch) {
-        System.out.println("------------ loaded");
+        logger.info("Loaded constructor ScheduledDirectoryHarvester with directory: " + directoryToWatch);
         this.directoryToWatch = directoryToWatch;
     }
 
     //@Scheduled(fixedDelay=10000)
     public void harvestDirectory() {
-
-        System.out.println("calling");
         //run the indexer - we don't need to worry about much, because Lire does not overwrite the index
         //it just appends new entries
         try {
